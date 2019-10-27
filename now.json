@@ -1,11 +1,21 @@
 {
   "version": 2,
   "scope": "fuckenv",
-  "builds": [{ "src": "packages/api/src/routes/*", "use": "@now/node" }],
+  "alias": "api.fuckenv.com",
+  "builds": [{ "src": "packages/api/src/routes/**/*", "use": "@now/node" }],
   "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/packages/api/src/routes/$1.ts"
+    },
     {
       "src": "(.*)",
       "dest": "/packages/api/src/routes/index.ts"
     }
-  ]
+  ],
+  "env": {
+    "GOOGLE_CLIENT_ID": "@google_client_id",
+    "GOOGLE_CLIENT_SECRET": "@google_client_secret",
+    "FAUNA_SECRET": "@fauna_secret"
+  }
 }
