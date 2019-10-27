@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "scope": "fuckenv",
+  "builds": [{ "src": "src/api/*", "use": "@now/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "/src/api/$1.ts" }]
+}
