@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { HttpException } from "common/exceptions/http.exception";
+import { HttpException } from "../exceptions/http.exception";
 
 type Route = (req: NextApiRequest, res: NextApiResponse) => Promise<void>;
 
