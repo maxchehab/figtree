@@ -1,0 +1,56 @@
+{
+  "name": "fuckenv",
+  "description": "env files shouldn't exist. fuck 'em.",
+  "version": "0.0.0",
+  "author": "maxchehab @maxchehab",
+  "bin": {
+    "fuckenv": "./bin/run"
+  },
+  "bugs": "https://github.com/maxchehab/fuckenv/issues",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/maxchehab/fuckenv",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "fuckenv",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "maxchehab/fuckenv",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@oclif/command": "1.5.19",
+    "@oclif/config": "1.13.3",
+    "@oclif/plugin-help": "2.2.1",
+    "@types/node": "12.11.7",
+    "globby": "10.0.1",
+    "ts-node": "8.4.1",
+    "tslib": "1.10.0",
+    "typescript": "3.6.4"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "1.22.2",
+    "@types/node": "12.11.7",
+    "globby": "10.0.1",
+    "ts-node": "8.4.1",
+    "typescript": "3.6.4"
+  }
+}
