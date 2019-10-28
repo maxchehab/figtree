@@ -41,7 +41,8 @@
     "@oclif/config": "1.13.3",
     "@oclif/plugin-help": "2.2.1",
     "@types/node": "12.11.7",
-    "chalk": "^2.4.2",
+    "axios": "0.19.0",
+    "chalk": "2.4.2",
     "globby": "10.0.1",
     "ts-node": "8.4.1",
     "tslib": "1.10.0",
@@ -50,6 +51,7 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "1.22.2",
+    "@types/axios": "0.14.0",
     "@types/chalk": "2.2.0",
     "@types/node": "12.11.7",
     "globby": "10.0.1",

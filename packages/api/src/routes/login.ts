@@ -21,29 +21,29 @@ export default Lambda(async (req, res) => {
     throw new HttpException(400, 'Invalid code.');
   }
 
-  try {
-    await faunaClient.query(
-      q.Get(q.Match(q.Index('login_requests_by_code'), code)),
-    );
+  const expired = await faunaClient.query(
+    q.Exists(q.Match(q.Index('login_requests_by_code'), code)),
+  );
 
-    return res.status(200).json({
-      code,
-      message: 'this code has expired',
-    });
-  } catch (error) {
-    await faunaClient.query(
-      q.Create(q.Collection('login_requests'), {
-        data: { code, createdAt: new Date() },
-      }),
-    );
-
-    const location = oauth2Client.generateAuthUrl({
-      access_type: 'offline',
-      scope: 'profile',
-      state: code,
-    });
-
-    res.setHeader('location', location);
-    return res.status(301).send(null);
+  if (expired) {
+    throw new HttpException(400, 'The code has expired.');
   }
+
+  await faunaClient.query(
+    q.Create(q.Collection('login_requests'), {
+      data: { code, createdAt: new Date() },
+    }),
+  );
+
+  const location = oauth2Client.generateAuthUrl({
+    access_type: 'offline',
+    scope: [
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/userinfo.profile',
+    ],
+    state: code,
+  });
+
+  res.setHeader('location', location);
+  return res.status(301).send(null);
 });

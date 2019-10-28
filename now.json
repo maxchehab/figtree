@@ -1,7 +1,7 @@
 {
   "version": 2,
   "scope": "fuckenv",
-  "alias": "api.fuckenv.com",
+  "alias": "https://api.fuckenv.com",
   "builds": [{ "src": "packages/api/src/routes/**/*", "use": "@now/node" }],
   "routes": [
     {
