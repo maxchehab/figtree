@@ -1,6 +1,7 @@
 import { Command, flags } from '@oclif/command';
 import { ulid } from 'ulid';
 import * as fs from 'fs';
+import * as open from 'open';
 import * as os from 'os';
 import * as path from 'path';
 import axios from 'axios';
@@ -17,11 +18,11 @@ export default class Login extends Command {
 
   async run() {
     const code = ulid();
-    const visitMessage = `Visit `.concat(
-      chalk.cyan(`https://api.fuckenv.com/login?code=${code}`),
-    );
+    const loginPath = `https://api.fuckenv.com/login?code=${code}`;
+    const visitMessage = `Visit `.concat(chalk.cyan(loginPath));
 
     this.log(visitMessage);
+    await open(loginPath);
 
     let token = null;
 
