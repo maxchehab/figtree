@@ -1,19 +1,17 @@
-import { Command, flags } from '@oclif/command';
+import { flags } from '@oclif/command';
 import { ulid } from 'ulid';
-import * as fs from 'fs';
-import * as open from 'open';
-import * as os from 'os';
-import * as path from 'path';
-import axios from 'axios';
+import open from 'open';
 import chalk from 'chalk';
+import FuckEnvCommand from '../utils/fuckenv-command';
 
-export default class Login extends Command {
+export default class Login extends FuckEnvCommand {
   static description = 'Logs into your account or creates a new one';
 
   static examples = [`$ fuckenv login`];
 
   static flags = {
     help: flags.help({ char: 'h' }),
+    debug: flags.boolean({ char: 'd' }),
   };
 
   async run() {
@@ -22,39 +20,34 @@ export default class Login extends Command {
     const visitMessage = `Visit `.concat(chalk.cyan(loginPath));
 
     this.log(visitMessage);
-    await open(loginPath);
+    (open as any)(loginPath);
 
-    let token = null;
+    const { data } = await this.api.poll(
+      ({ status }) => status === 200,
+      'GET',
+      '/token',
+      { params: { code } },
+    );
 
-    while (!token) {
-      try {
-        const { status, data } = await axios.get(
-          `https://api.fuckenv.com/token?code=${code}`,
-        );
+    const { token } = data;
 
-        if (status === 200) {
-          token = data.token;
-        }
-      } catch (_error) {}
+    this.debug(`Received token '${token}'`);
+    this.api.writeToken(token);
+    this.api.setToken(token);
+
+    try {
+      const { status, data } = await this.api.get('/whoami');
+
+      if (status === 200) {
+        const { email } = data.user;
+        const message = `You are logged in as `.concat(chalk.bold(email));
+
+        this.log(message);
+        return;
+      }
+    } catch (error) {
+      this.log('Login failed');
+      return this.exit();
     }
-
-    const homedir = os.homedir();
-    const fuckEnvDir = path.join(homedir, '.fuckenv');
-
-    if (!fs.existsSync(fuckEnvDir)) {
-      fs.mkdirSync(fuckEnvDir);
-    }
-
-    const tokenPath = path.join(fuckEnvDir, 'token.json');
-    const data = JSON.stringify({ token }, null, 2);
-    fs.writeFileSync(tokenPath, data);
-
-    const {
-      data: { user },
-    } = await axios.get(`https://api.fuckenv.com/users?token=${token}`);
-
-    const message = `You are logged in as `.concat(chalk.bold(user.email));
-
-    this.log(message);
   }
 }

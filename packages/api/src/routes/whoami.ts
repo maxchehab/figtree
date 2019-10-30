@@ -10,11 +10,13 @@ const faunaClient = new Client({
 });
 
 export default Lambda(async (req, res) => {
-  const { token } = req.query;
+  const authorization = req.headers.authorization;
 
-  if (typeof token !== 'string') {
+  if (typeof authorization !== 'string') {
     throw new HttpException(400, 'Invalid token.');
   }
+
+  const token = authorization.split(' ')[1];
 
   const exists = await faunaClient.query(
     q.Exists(q.Match(q.Index('users_by_token'), token)),
