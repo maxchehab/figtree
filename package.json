@@ -3,7 +3,7 @@
   "workspaces": [
     "packages/*"
   ],
-  "repository": "https://github.com/maxchehab/fuckenv",
+  "repository": "https://github.com/maxchehab/figtree",
   "author": "maxchehab @maxchehab",
   "license": "MIT"
 }

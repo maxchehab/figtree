@@ -1,12 +1,12 @@
 import { flags } from '@oclif/command';
 import chalk from 'chalk';
 
-import FuckEnvCommand from '../utils/fuckenv-command';
+import FigtreeCommand from '../utils/figtree-command';
 
-export default class WhoAmI extends FuckEnvCommand {
+export default class WhoAmI extends FigtreeCommand {
   static description = 'Shows the username of the currently logged in user';
 
-  static examples = [`$ fuckenv whoami`];
+  static examples = [`$ figtree whoami`];
 
   static flags = {
     help: flags.help({ char: 'h', description: '' }),
@@ -14,8 +14,8 @@ export default class WhoAmI extends FuckEnvCommand {
   };
 
   async run() {
-    const notFoundMessage = `I don't fuck'n know. Try `.concat(
-      chalk.bold('fuckenv login'),
+    const notFoundMessage = `You aren't logged in. Try `.concat(
+      chalk.bold('figtree login'),
     );
 
     try {

@@ -28,15 +28,15 @@ export class API {
 
   writeToken(token: string) {
     const homedir = os.homedir();
-    const fuckEnvDir = path.join(homedir, '.fuckenv');
-    this.debug(`Checking if '${fuckEnvDir}' exists`);
+    const figtreeDir = path.join(homedir, '.figtree');
+    this.debug(`Checking if '${figtreeDir}' exists`);
 
-    if (!fs.existsSync(fuckEnvDir)) {
-      this.debug(`Path '${fuckEnvDir}' does not exist, creating`);
-      fs.mkdirSync(fuckEnvDir);
+    if (!fs.existsSync(figtreeDir)) {
+      this.debug(`Path '${figtreeDir}' does not exist, creating`);
+      fs.mkdirSync(figtreeDir);
     }
 
-    const tokenPath = path.join(fuckEnvDir, 'token.json');
+    const tokenPath = path.join(figtreeDir, 'token.json');
     const data = JSON.stringify({ token });
     this.debug(`Saving data '${data}' to '${tokenPath}'`);
 
@@ -47,7 +47,7 @@ export class API {
     let token: string;
 
     const homedir = os.homedir();
-    const tokenPath = path.join(homedir, '.fuckenv', 'token.json');
+    const tokenPath = path.join(homedir, '.figtree', 'token.json');
     this.debug(`Searching '${tokenPath}' for token`);
 
     if (!fs.existsSync(tokenPath)) {
@@ -75,7 +75,7 @@ export class API {
     path: string,
     config?: AxiosRequestConfig,
   ) {
-    const url = `https://api.fuckenv.com${path}`;
+    const url = `https://figtree.sh${path}`;
     this.debug('Polling', method, url);
 
     this.toggleDebug(false);
@@ -109,7 +109,7 @@ export class API {
   ): Promise<AxiosResponse<any>> {
     this.debug(`Using token '${this.token}'`);
 
-    const url = `https://api.fuckenv.com${path}`;
+    const url = `https://figtree.sh${path}`;
 
     try {
       this.debug('GET', url);
@@ -118,7 +118,7 @@ export class API {
       const response = await axios.get(url, {
         ...config,
         headers: {
-          'User-Agent': `fuckenv-cli/v${version}`,
+          'User-Agent': `figtree-cli/v${version}`,
           'Authorization': `Bearer ${this.token}`,
           ...headers,
         },

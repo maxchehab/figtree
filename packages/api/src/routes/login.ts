@@ -11,7 +11,7 @@ const faunaClient = new Client({
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  'https://api.fuckenv.com/auth/google',
+  'https://figtree.sh/auth/google',
 );
 
 export default Lambda(async (req, res) => {

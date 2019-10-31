@@ -1,12 +1,12 @@
 {
-  "name": "fuckenv",
-  "description": "env files shouldn't exist. fuck 'em.",
+  "name": "figtree",
+  "description": "env files shouldn't exist.",
   "version": "0.0.0",
   "author": "maxchehab @maxchehab",
   "bin": {
-    "fuckenv": "./bin/run"
+    "figtree": "./bin/run"
   },
-  "bugs": "https://github.com/maxchehab/fuckenv/issues",
+  "bugs": "https://github.com/maxchehab/figtree/issues",
   "engines": {
     "node": ">=8.0.0"
   },
@@ -16,7 +16,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/maxchehab/fuckenv",
+  "homepage": "https://github.com/maxchehab/figtree",
   "keywords": [
     "oclif"
   ],
@@ -24,12 +24,12 @@
   "main": "lib/index.js",
   "oclif": {
     "commands": "./lib/commands",
-    "bin": "fuckenv",
+    "bin": "figtree",
     "plugins": [
       "@oclif/plugin-help"
     ]
   },
-  "repository": "maxchehab/fuckenv",
+  "repository": "maxchehab/figtree",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",

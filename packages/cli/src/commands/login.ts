@@ -2,12 +2,12 @@ import { flags } from '@oclif/command';
 import { ulid } from 'ulid';
 import open from 'open';
 import chalk from 'chalk';
-import FuckEnvCommand from '../utils/fuckenv-command';
+import FigtreeCommand from '../utils/figtree-command';
 
-export default class Login extends FuckEnvCommand {
+export default class Login extends FigtreeCommand {
   static description = 'Logs into your account or creates a new one';
 
-  static examples = [`$ fuckenv login`];
+  static examples = [`$ figtree login`];
 
   static flags = {
     help: flags.help({ char: 'h' }),
@@ -16,7 +16,7 @@ export default class Login extends FuckEnvCommand {
 
   async run() {
     const code = ulid();
-    const loginPath = `https://api.fuckenv.com/login?code=${code}`;
+    const loginPath = `https://figtree.sh/login?code=${code}`;
     const visitMessage = `Visit `.concat(chalk.cyan(loginPath));
 
     this.log(visitMessage);

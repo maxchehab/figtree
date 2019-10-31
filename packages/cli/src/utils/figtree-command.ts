@@ -4,11 +4,11 @@ import chalk from 'chalk';
 
 import { API } from './api';
 
-export default class FuckEnvCommand extends Command {
+export default class FigtreeCommand extends Command {
   constructor(argv: string[], config: IConfig) {
     super(argv, config);
 
-    const { flags } = this.parse(FuckEnvCommand);
+    const { flags } = this.parse(FigtreeCommand);
 
     this.doDebug = flags.debug;
     this.api = new API(this.doDebug);

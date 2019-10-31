@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "scope": "fuckenv",
-  "alias": "https://api.fuckenv.com",
+  "scope": "figtree",
+  "alias": "https://figtree.sh",
   "builds": [{ "src": "packages/api/src/routes/**/*", "use": "@now/node" }],
   "routes": [
     {
