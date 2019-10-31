@@ -3,12 +3,14 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 
+import { APIOptions } from './api-options.interface';
 import { debug } from '../utils/debug.util';
 
 type PollCallback = (response: AxiosResponse<any>) => boolean;
 
 export class API {
-  constructor(private readonly userAgent: string) {
+  constructor(private readonly options: APIOptions) {
+    debug('Initalizing API with options', JSON.stringify(options));
     this.token = this.readToken();
   }
 
@@ -68,7 +70,7 @@ export class API {
     path: string,
     config?: AxiosRequestConfig,
   ) {
-    const url = `https://figtree.sh${path}`;
+    const url = `https://${this.options.apiHostname}${path}`;
     debug('Polling', method, url);
 
     let response: AxiosResponse<any> | undefined = undefined;
@@ -98,7 +100,7 @@ export class API {
   ): Promise<AxiosResponse<any>> {
     debug(`Using token '${this.token}'`);
 
-    const url = `https://figtree.sh${path}`;
+    const url = `https://${this.options.apiHostname}${path}`;
 
     try {
       debug('GET', url);
@@ -107,7 +109,7 @@ export class API {
       const response = await axios.get(url, {
         ...config,
         headers: {
-          'User-Agent': this.userAgent,
+          'User-Agent': this.options.userAgent,
           'Authorization': `Bearer ${this.token}`,
           ...headers,
         },

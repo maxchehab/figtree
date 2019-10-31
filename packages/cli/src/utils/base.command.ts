@@ -1,17 +1,25 @@
 import Command, { flags } from '@oclif/command';
 import chalk from 'chalk';
 
-import { API } from '../utils/api';
+import { API } from '../api/api';
 import { debug } from '../utils/debug.util';
 
 export default abstract class Base extends Command {
   static flags = {
     debug: flags.boolean({ char: 'd' }),
+    api: flags.string({ char: 'a', default: 'figtree.sh' }),
   };
 
-  readonly api: API = new API(this.config.userAgent);
+  api: API = {} as API;
 
-  async init() {}
+  async init() {
+    const { flags } = this.parse(Base);
+
+    this.api = new API({
+      userAgent: this.config.userAgent,
+      apiHostname: flags.api,
+    });
+  }
 
   async catch(error: Error) {
     this.error(error);

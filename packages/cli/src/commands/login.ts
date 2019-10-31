@@ -12,12 +12,14 @@ export default class Login extends Base {
 
   static flags = {
     help: flags.help({ char: 'h' }),
-    debug: flags.boolean({ char: 'd' }),
+    ...Base.flags,
   };
 
   async run() {
+    const { flags } = this.parse(Login);
+
     const code = ulid();
-    const loginPath = `https://figtree.sh/login?code=${code}`;
+    const loginPath = `https://${flags.api}/login?code=${code}`;
     const visitMessage = `Visit `.concat(chalk.cyan(loginPath));
 
     this.log(visitMessage);
