@@ -2,9 +2,10 @@ import { flags } from '@oclif/command';
 import { ulid } from 'ulid';
 import open from 'open';
 import chalk from 'chalk';
-import FigtreeCommand from '../utils/figtree-command';
 
-export default class Login extends FigtreeCommand {
+import Base from '../utils/base.command';
+
+export default class Login extends Base {
   static description = 'Logs into your account or creates a new one';
 
   static examples = [`$ figtree login`];
@@ -22,32 +23,22 @@ export default class Login extends FigtreeCommand {
     this.log(visitMessage);
     (open as any)(loginPath);
 
-    const { data } = await this.api.poll(
-      ({ status }) => status === 200,
-      'GET',
-      '/token',
-      { params: { code } },
-    );
-
-    const { token } = data;
+    const {
+      data: { token },
+    } = await this.api.poll(({ status }) => status === 200, 'GET', '/token', {
+      params: { code },
+    });
 
     this.debug(`Received token '${token}'`);
     this.api.writeToken(token);
     this.api.setToken(token);
 
-    try {
-      const { status, data } = await this.api.get('/whoami');
+    const { status, data } = await this.api.get('/whoami');
 
-      if (status === 200) {
-        const { email } = data.user;
-        const message = `You are logged in as `.concat(chalk.bold(email));
-
-        this.log(message);
-        return;
-      }
-    } catch (error) {
-      this.log('Login failed');
-      return this.exit();
+    if (status === 200) {
+      const { email } = data.user;
+      this.log(email);
+      return;
     }
   }
 }

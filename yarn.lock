@@ -816,6 +816,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@cli-engine/screen@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@cli-engine/screen/-/screen-0.0.0.tgz#c2e847c7d4d998490c9097282bf21637d5162116"
+  integrity sha512-q7fS724xIeDyFABohyXe5KOpKjcpTpmH4byBy5JTIL+UM71VNVlkP//NC8IWEqEU4rh1HrMPBvrMEWgrao2tFQ==
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.3.tgz#099139eaec7ebf07a27c1786a3ff64f39464d2ef"
@@ -828,6 +833,11 @@
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
+
+"@heroku/linewrap@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@heroku/linewrap/-/linewrap-1.0.0.tgz#a9d4e99f0a3e423a899b775f5f3d6747a1ff15c6"
+  integrity sha512-qPeQp2DnALUwWKaL6ZXfnOw/lHp+zNg5V8whx5c/Y10HMWYjuQFqKupgoJgyuEYjnvYwoZTarW280+aOXWQLCQ==
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
@@ -2312,6 +2322,15 @@ cli-cursor@^2.1.0:
   integrity sha1-s12sN2R5+sw+lHR9QdDQ9SOP/LU=
   dependencies:
     restore-cursor "^2.0.0"
+
+cli-flags@2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/cli-flags/-/cli-flags-2.0.7.tgz#215b3f8d911142c3e4833eaf7f2f96ab97fd22cf"
+  integrity sha512-Qb0mosc+AQpVOKQLZCDX09w8ZJ+Pthrc18DdPNwN4zcMmbiq9sRryNLglrVdpycU0hKRzUraxg167FBIsqT7zA==
+  dependencies:
+    "@cli-engine/screen" "^0.0.0"
+    "@heroku/linewrap" "^1.0.0"
+    ts-lodash "^4.0.8"
 
 cli-spinners@^2.0.0:
   version "2.2.0"
@@ -8177,6 +8196,13 @@ ts-jest@24.0.2:
     resolve "1.x"
     semver "^5.5"
     yargs-parser "10.x"
+
+ts-lodash@^4.0.8:
+  version "4.0.11"
+  resolved "https://registry.yarnpkg.com/ts-lodash/-/ts-lodash-4.0.11.tgz#f668e2ad4b6cb3bcbeceb894cf0a8cde48b3cd85"
+  integrity sha512-MtePBFKyRbaPVA4TLCbQxoOcpVIsGF3SCirqfMGAea9lobDZzCx4920umXysue99y2vj2/F59VKkkxy4UWVoFA==
+  dependencies:
+    lodash "^4.17.4"
 
 ts-node@8.4.1:
   version "8.4.1"

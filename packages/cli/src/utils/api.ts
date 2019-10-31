@@ -3,13 +3,12 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 
-import { version } from '../../package.json';
-import { debug } from './debug.util';
+import { debug } from '../utils/debug.util';
 
 type PollCallback = (response: AxiosResponse<any>) => boolean;
 
 export class API {
-  constructor() {
+  constructor(private readonly userAgent: string) {
     this.token = this.readToken();
   }
 
@@ -108,7 +107,7 @@ export class API {
       const response = await axios.get(url, {
         ...config,
         headers: {
-          'User-Agent': `figtree-cli/v${version}`,
+          'User-Agent': this.userAgent,
           'Authorization': `Bearer ${this.token}`,
           ...headers,
         },
