@@ -1,7 +1,7 @@
 {
   "version": 2,
   "scope": "figtree",
-  "alias": "https://figtree.sh",
+  "alias": "figtree.sh",
   "builds": [{ "src": "packages/api/src/routes/**/*", "use": "@now/node" }],
   "routes": [
     {
