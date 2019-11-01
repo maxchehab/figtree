@@ -23,7 +23,7 @@ jobs:
       run: yarn install
     
     - name: Lint
-      run: yarn workspaces run build
+      run: yarn workspaces run lint
 
     - name: Test
       run: yarn workspaces run test
