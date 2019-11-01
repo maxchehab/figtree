@@ -4,6 +4,7 @@ import open from 'open';
 import chalk from 'chalk';
 
 import Base from '../utils/base.command';
+import { debug } from '../utils/debug.util';
 
 export default class Login extends Base {
   static description = 'Logs into your account or creates a new one';
@@ -19,7 +20,7 @@ export default class Login extends Base {
     const { flags } = this.parse(Login);
 
     const code = ulid();
-    const loginPath = `https://${flags.api}/login?code=${code}`;
+    const loginPath = `${flags.api}/login?code=${code}`;
     const visitMessage = `Visit `.concat(chalk.cyan(loginPath));
 
     this.log(visitMessage);
@@ -31,7 +32,7 @@ export default class Login extends Base {
       params: { code },
     });
 
-    this.debug(`Received token '${token}'`);
+    debug(`Received token '${token}'`);
     this.api.writeToken(token);
     this.api.setToken(token);
 

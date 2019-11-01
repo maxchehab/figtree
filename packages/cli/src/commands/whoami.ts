@@ -10,7 +10,7 @@ export default class WhoAmI extends Base {
 
   static flags = {
     help: flags.help({ char: 'h', description: '' }),
-    debug: flags.boolean({ char: 'd' }),
+    ...Base.flags,
   };
 
   async run() {

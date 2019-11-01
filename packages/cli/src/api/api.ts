@@ -70,7 +70,7 @@ export class API {
     path: string,
     config?: AxiosRequestConfig,
   ) {
-    const url = `https://${this.options.apiHostname}${path}`;
+    const url = `${this.options.apiURL}${path}`;
     debug('Polling', method, url);
 
     let response: AxiosResponse<any> | undefined = undefined;
@@ -100,7 +100,7 @@ export class API {
   ): Promise<AxiosResponse<any>> {
     debug(`Using token '${this.token}'`);
 
-    const url = `https://${this.options.apiHostname}${path}`;
+    const url = `${this.options.apiURL}${path}`;
 
     try {
       debug('GET', url);

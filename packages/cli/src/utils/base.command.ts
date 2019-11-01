@@ -7,7 +7,7 @@ import { debug } from '../utils/debug.util';
 export default abstract class Base extends Command {
   static flags = {
     debug: flags.boolean({ char: 'd' }),
-    api: flags.string({ char: 'a', default: 'figtree.sh' }),
+    api: flags.string({ char: 'a', default: 'https://figtree.sh' }),
   };
 
   api: API = {} as API;
@@ -17,7 +17,7 @@ export default abstract class Base extends Command {
 
     this.api = new API({
       userAgent: this.config.userAgent,
-      apiHostname: flags.api,
+      apiURL: flags.api,
     });
   }
 
@@ -31,7 +31,7 @@ export default abstract class Base extends Command {
 
   exit = (code: number = 0) => {
     debug(`Exiting with code ${code}`);
-    return process.exit(code);
+    return super.exit(code);
   };
 
   error = (

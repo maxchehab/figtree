@@ -8,10 +8,15 @@ const faunaClient = new Client({
   secret: process.env.FAUNA_SECRET as string,
 });
 
+const redirectURI =
+  process.env.NODE_ENV === 'production'
+    ? 'https://figtree.sh/auth/google'
+    : 'http://localhost:3000/auth/google';
+
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  'https://figtree.sh/auth/google',
+  redirectURI,
 );
 
 export default Lambda(async (req, res) => {

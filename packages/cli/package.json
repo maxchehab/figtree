@@ -1,5 +1,5 @@
 {
-  "name": "figtree",
+  "name": "@figtree/cli",
   "description": "env files shouldn't exist.",
   "version": "0.0.0",
   "author": "maxchehab @maxchehab",
@@ -29,11 +29,27 @@
       "@oclif/plugin-help"
     ]
   },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  },
   "repository": "maxchehab/figtree",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
-    "version": "oclif-dev readme && git add README.md"
+    "version": "oclif-dev readme && git add README.md",
+    "test": "yarn jest",
+    "lint": "tslint -p tsconfig.json -c tslint.json"
   },
   "types": "lib/index.d.ts",
   "dependencies": {
@@ -53,12 +69,16 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "1.22.2",
+    "@oclif/test": "^1.2.5",
     "@types/axios": "0.14.0",
     "@types/chalk": "2.2.0",
     "@types/node": "12.11.7",
     "@types/open": "6.2.1",
     "globby": "10.0.1",
+    "@types/jest": "24.0.21",
     "ts-node": "8.4.1",
-    "typescript": "3.6.4"
+    "typescript": "3.6.4",
+    "jest": "24.9.0",
+    "ts-jest": "24.1.0"
   }
 }

@@ -5,5 +5,8 @@
   ],
   "repository": "https://github.com/maxchehab/figtree",
   "author": "maxchehab @maxchehab",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "tslint": "5.20.0"
+  }
 }

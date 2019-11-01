@@ -1,5 +1,5 @@
 {
-  "name": "figtree-api",
+  "name": "@figtree/api",
   "version": "0.0.0",
   "devDependencies": {
     "@types/jest": "24.0.11",
@@ -17,5 +17,9 @@
   "dependencies": {
     "faunadb": "2.9.3",
     "googleapis": "44.0.0"
+  },
+  "scripts": {
+    "test": "echo @figtree/api no tests",
+    "lint": "tslint -p ../../tsconfig.json -c ../../tslint.json"
   }
 }
