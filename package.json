@@ -8,5 +8,10 @@
   "license": "MIT",
   "devDependencies": {
     "tslint": "5.20.0"
+  },
+  "scripts": {
+    "lint": "yarn workspaces run lint",
+    "test": "yarn workspaces run test",
+    "build": "yarn workspaces run build"
   }
 }

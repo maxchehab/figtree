@@ -20,6 +20,7 @@
   },
   "scripts": {
     "test": "echo @figtree/api no tests",
-    "lint": "tslint -p ../../tsconfig.json -c ../../tslint.json"
+    "lint": "tslint -p ../../tsconfig.json -c ../../tslint.json",
+    "build": "tsc -b ../../tsconfig.json"
   }
 }

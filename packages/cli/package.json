@@ -12,7 +12,7 @@
   },
   "files": [
     "/bin",
-    "/lib",
+    "/dist",
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
@@ -21,9 +21,9 @@
     "oclif"
   ],
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "oclif": {
-    "commands": "./lib/commands",
+    "commands": "./dist/commands",
     "bin": "figtree",
     "plugins": [
       "@oclif/plugin-help"
@@ -46,12 +46,13 @@
   "repository": "maxchehab/figtree",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "rm -rf dist && tsc -b && oclif-dev manifest && oclif-dev readme",
     "version": "oclif-dev readme && git add README.md",
     "test": "yarn jest",
-    "lint": "tslint -p tsconfig.json -c ../../tslint.json"
+    "lint": "tslint -p tsconfig.json -c ../../tslint.json",
+    "build": "tsc -b tsconfig.json"
   },
-  "types": "lib/index.d.ts",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "@oclif/command": "1.5.19",
     "@oclif/config": "1.13.3",
