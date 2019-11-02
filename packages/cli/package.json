@@ -47,10 +47,11 @@
   "repository": "maxchehab/figtree",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
-    "prepack": "rm -rf dist && tsc -b && oclif-dev manifest",
+    "prepack": "rm -rf dist && tsc -b && oclif-dev manifest && yarn bump-version",
     "test": "yarn jest",
     "lint": "tslint -p tsconfig.json -c ../../tslint.json",
-    "build": "tsc -b tsconfig.json"
+    "build": "tsc -b tsconfig.json",
+    "bump-version": "auto-upgrade-npm-version"
   },
   "types": "dist/index.d.ts",
   "dependencies": {
@@ -75,6 +76,7 @@
     "@types/chalk": "2.2.0",
     "@types/node": "12.11.7",
     "@types/open": "6.2.1",
+    "auto-upgrade-npm-version": "1.0.7",
     "globby": "10.0.1",
     "@types/jest": "24.0.21",
     "ts-node": "8.4.1",
