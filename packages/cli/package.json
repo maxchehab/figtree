@@ -48,7 +48,7 @@
   "repository": "maxchehab/figtree",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
-    "prepack": "rm -rf dist && tsc -b && oclif-dev manifest && yarn bump-version",
+    "prepack": "rm -rf dist && tsc -b && oclif-dev manifest",
     "test": "yarn jest",
     "lint": "tslint -p tsconfig.json -c ../../tslint.json",
     "build": "tsc -b tsconfig.json",
