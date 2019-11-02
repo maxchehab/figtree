@@ -72,17 +72,19 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "1.22.2",
-    "@oclif/test": "^1.2.5",
+    "@oclif/test": "1.2.5",
     "@types/axios": "0.14.0",
     "@types/chalk": "2.2.0",
+    "@types/jest": "24.0.21",
     "@types/node": "12.11.7",
     "@types/open": "6.2.1",
+    "@types/strip-ansi": "^5.2.1",
     "auto-upgrade-npm-version": "1.0.7",
     "globby": "10.0.1",
-    "@types/jest": "24.0.21",
-    "ts-node": "8.4.1",
-    "typescript": "3.6.4",
     "jest": "24.9.0",
-    "ts-jest": "24.1.0"
+    "strip-ansi": "5.2.0",
+    "ts-jest": "24.1.0",
+    "ts-node": "8.4.1",
+    "typescript": "3.6.4"
   }
 }
