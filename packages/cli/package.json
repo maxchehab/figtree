@@ -19,7 +19,8 @@
   ],
   "homepage": "https://github.com/maxchehab/figtree",
   "keywords": [
-    "oclif"
+    "figtree",
+    "cli"
   ],
   "license": "MIT",
   "main": "dist/index.js",
