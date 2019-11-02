@@ -1,8 +1,8 @@
 name: Publish @figtree/cli
 
 on:
-  push: 
-    branches: 
+  push:
+    branches:
       - master
 
 jobs:
@@ -12,8 +12,9 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: '10.x'
           registry-url: https://registry.npmjs.org/
+
       - name: Cache node modules
         uses: actions/cache@preview
         with:
@@ -21,9 +22,11 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install Dependencies
-        run: yarn install 
+        run: yarn install
+
       - name: Publish
-      - run: npm publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
