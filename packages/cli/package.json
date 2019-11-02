@@ -3,6 +3,7 @@
   "description": "env files shouldn't exist.",
   "version": "0.0.0",
   "author": "maxchehab @maxchehab",
+  "private": false,
   "bin": {
     "figtree": "./bin/run"
   },
