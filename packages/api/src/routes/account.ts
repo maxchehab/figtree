@@ -5,19 +5,14 @@ import { FaunaEntity } from '../fauna/interfaces/fauna-entity.interface';
 import { HttpException } from '../common/exceptions/http.exception';
 import { Lambda } from '../common/util/lambda.util';
 import { User } from '../common/interfaces/user.interface';
+import getBearerToken from '../common/util/get-bearer-token.util';
 
 const faunaClient = new Client({
   secret: process.env.FAUNA_SECRET as string,
 });
 
 export default Lambda(async (req, res) => {
-  const authorization = req.headers.authorization;
-
-  if (typeof authorization !== 'string') {
-    throw new HttpException(400, 'Invalid token.');
-  }
-
-  const token = authorization.split(' ')[1];
+  const token = getBearerToken(req);
 
   const exists = await faunaClient.query(
     q.Exists(q.Match(q.Index('users_by_token'), token)),
