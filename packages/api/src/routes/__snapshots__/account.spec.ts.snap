@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`account with a user found by the token provided with the user's 'auth_status' as Logged In returns 200, with the user 1`] = `
+Object {
+  "user": Object {
+    "auth_status": "LOGGED_IN",
+    "email": "example@gmail.com",
+    "id": "usr_123",
+    "login_request_code": "code_123",
+    "token": "token_123",
+  },
+}
+`;
