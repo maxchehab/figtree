@@ -33,6 +33,22 @@ export class FaunaClient {
     }
   }
 
+  async userByID(id: string): Promise<FaunaEntity<User> | null> {
+    try {
+      return this.client.query(q.Get(q.Match(q.Index('users_by_id'), id)));
+    } finally {
+      return null;
+    }
+  }
+
+  async createUser(data: Partial<User>): Promise<FaunaEntity<User>> {
+    return this.client.query(
+      q.Create(q.Collection('users'), {
+        data,
+      }),
+    );
+  }
+
   async createLoginRequest(
     code: string,
     createdAt: Date,
