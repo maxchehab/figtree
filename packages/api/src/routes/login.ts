@@ -2,7 +2,7 @@ import { google } from 'googleapis';
 
 import { FaunaClient } from '../fauna/fauna-client';
 import { HttpException } from '../common/exceptions/http.exception';
-import { Lambda } from '../common/util/lambda.util';
+import lambda from '../common/util/lambda.util';
 
 const faunaClient = new FaunaClient();
 
@@ -17,7 +17,7 @@ const oauth2Client = new google.auth.OAuth2(
   redirectURI,
 );
 
-export default Lambda(async (req, res) => {
+export default lambda(async (req, res) => {
   const { code } = req.query;
 
   if (typeof code !== 'string') {

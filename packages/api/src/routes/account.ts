@@ -1,12 +1,12 @@
 import { AuthStatus } from '../common/interfaces/auth-status.enum';
 import { FaunaClient } from '../fauna/fauna-client';
 import { HttpException } from '../common/exceptions/http.exception';
-import { Lambda } from '../common/util/lambda.util';
 import getBearerToken from '../common/util/get-bearer-token.util';
+import lambda from '../common/util/lambda.util';
 
 const faunaClient = new FaunaClient();
 
-export default Lambda(async (req, res) => {
+export default lambda(async (req, res) => {
   const token = getBearerToken(req);
   const user = await faunaClient.userByToken(token);
 

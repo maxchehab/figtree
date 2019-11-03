@@ -1,13 +1,13 @@
 import { ulid } from 'ulid';
 
 import { AuthStatus } from '../common/interfaces/auth-status.enum';
-import { HttpException } from '../common/exceptions/http.exception';
-import { Lambda } from '../common/util/lambda.util';
 import { FaunaClient } from '../fauna/fauna-client';
+import { HttpException } from '../common/exceptions/http.exception';
+import lambda from '../common/util/lambda.util';
 
 const client = new FaunaClient();
 
-export default Lambda(async (req, res) => {
+export default lambda(async (req, res) => {
   const { code } = req.query;
 
   if (typeof code !== 'string') {

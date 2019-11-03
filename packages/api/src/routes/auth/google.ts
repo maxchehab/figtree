@@ -3,7 +3,7 @@ import { google } from 'googleapis';
 
 import { AuthStatus } from '../../common/interfaces/auth-status.enum';
 import { HttpException } from '../../common/exceptions/http.exception';
-import { Lambda } from '../../common/util/lambda.util';
+import lambda from '../../common/util/lambda.util';
 
 const faunaClient = new Client({
   secret: process.env.FAUNA_SECRET as string,
@@ -20,7 +20,7 @@ const oauth2Client = new google.auth.OAuth2(
   redirectURI,
 );
 
-export default Lambda(async (req, res) => {
+export default lambda(async (req, res) => {
   const { code, state } = req.query;
 
   if (typeof code !== 'string' || typeof state !== 'string') {
