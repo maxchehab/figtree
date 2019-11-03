@@ -16,7 +16,7 @@
     "test-listen": "1.1.0",
     "ts-jest": "24.0.2",
     "typescript": "3.4.5",
-    "webpack-bundle-analyzer": "3.0.2"
+    "webpack-bundle-analyzer": "3.6.0"
   },
   "dependencies": {
     "faunadb": "2.9.3",
