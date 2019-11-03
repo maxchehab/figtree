@@ -5,12 +5,12 @@
   "builds": [{ "src": "packages/api/src/routes/**/*", "use": "@now/node" }],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "/packages/api/src/routes/$1.ts"
+      "src": "/",
+      "dest": "/packages/api/src/routes/index.ts"
     },
     {
-      "src": "(.*)",
-      "dest": "/packages/api/src/routes/index.ts"
+      "src": "/(.*)",
+      "dest": "/packages/api/src/routes/$1.ts"
     }
   ],
   "env": {

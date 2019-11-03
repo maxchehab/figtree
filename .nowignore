@@ -1,0 +1,4 @@
+**/*.spec.ts
+packages/cli
+.github
+yarn-error.log
