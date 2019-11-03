@@ -19,7 +19,7 @@ export default class WhoAmI extends Base {
     );
 
     try {
-      const { status, data } = await this.api.get('/whoami');
+      const { status, data } = await this.api.get('/account');
 
       if (status === 200) {
         const { email } = data.user;

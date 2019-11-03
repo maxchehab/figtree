@@ -4,7 +4,7 @@ describe('whoami', () => {
   describe('with successful API response', () => {
     test
       .nock('https://figtree.sh', api =>
-        api.get('/whoami').reply(200, { user: { email: 'jeff@example.com' } }),
+        api.get('/account').reply(200, { user: { email: 'jeff@example.com' } }),
       )
       .stdout()
       .command(['whoami'])
@@ -15,7 +15,7 @@ describe('whoami', () => {
 
   describe('with un-successful API response', () => {
     test
-      .nock('https://figtree.sh', api => api.get('/whoami').reply(401))
+      .nock('https://figtree.sh', api => api.get('/account').reply(401))
       .stdout()
       .command(['whoami'])
       .it('shows not found message with error code', ctx => {
