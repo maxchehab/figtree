@@ -41,7 +41,14 @@ export default class Login extends Base {
     if (status === 200) {
       const { email } = data.user;
       this.log(email);
-      return;
+    } else {
+      this.error(
+        'An error occurred and we could not login. For more information try running this command again with the '.concat(
+          chalk.white('--debug').concat(' flag'),
+        ),
+      );
+
+      this.exit(1);
     }
   }
 }

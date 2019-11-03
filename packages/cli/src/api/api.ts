@@ -16,12 +16,12 @@ export class API {
 
   private token: string | undefined;
 
-  setToken(token: string) {
+  setToken(token: string | undefined) {
     debug(`Updating token from '${this.token}' to '${token}'`);
     this.token = token;
   }
 
-  writeToken(token: string) {
+  writeToken(token: string | undefined) {
     const homedir = os.homedir();
     const figtreeDir = path.join(homedir, '.figtree');
     debug(`Checking if '${figtreeDir}' exists`);
@@ -55,7 +55,7 @@ export class API {
     try {
       const data = fs.readFileSync(tokenPath, 'utf8');
       token = JSON.parse(data).token;
-      debug(`Parsed token '${this.token}'`);
+      debug(`Parsed token '${token}'`);
     } catch (error) {
       debug(error);
       return undefined;
@@ -113,6 +113,7 @@ export class API {
           'Authorization': `Bearer ${this.token}`,
           ...headers,
         },
+        validateStatus: () => true,
       });
 
       const { status, data } = response;
