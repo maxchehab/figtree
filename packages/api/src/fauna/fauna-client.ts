@@ -23,6 +23,16 @@ export class FaunaClient {
     this.client.query(q.Update(ref, { data }));
   }
 
+  async userByToken(token: string): Promise<FaunaEntity<User> | null> {
+    try {
+      return this.client.query(
+        q.Get(q.Match(q.Index('users_by_token'), token)),
+      );
+    } finally {
+      return null;
+    }
+  }
+
   async createLoginRequest(
     code: string,
     createdAt: Date,
