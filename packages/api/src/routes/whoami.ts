@@ -1,6 +1,7 @@
 import { Client, query as q } from 'faunadb';
 
 import { AuthStatus } from '../common/interfaces/auth-status.enum';
+import { FaunaEntity } from '../fauna/interfaces/fauna-entity.interface';
 import { HttpException } from '../common/exceptions/http.exception';
 import { Lambda } from '../common/util/lambda.util';
 import { User } from '../common/interfaces/user.interface';
@@ -25,7 +26,7 @@ export default Lambda(async (req, res) => {
   if (exists) {
     const { data } = (await faunaClient.query(
       q.Get(q.Match(q.Index('users_by_token'), token)),
-    )) as User;
+    )) as FaunaEntity<User>;
 
     if (data.auth_status === AuthStatus.LoggedIn) {
       return res.status(200).json({ user: data });
