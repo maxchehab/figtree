@@ -1,3 +1,3 @@
-import { Lambda } from '../common/util/lambda.util';
+import lambda from '../common/util/lambda.util';
 
-export default Lambda(async (_req, res) => res.status(200).send('figtree.sh'));
+export default lambda(async (_req, res) => res.status(200).send('figtree.sh'));

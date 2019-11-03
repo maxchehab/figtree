@@ -4,7 +4,7 @@ import { HttpException } from '../exceptions/http.exception';
 
 type Route = (req: NextApiRequest, res: NextApiResponse) => Promise<void>;
 
-export function Lambda(route: Route) {
+export default function lambda(route: Route) {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       await route(req, res);
