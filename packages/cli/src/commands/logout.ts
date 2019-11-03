@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import Base from '../utils/base.command';
 
 export default class Logout extends Base {
-  static description = 'Logouts your account';
+  static description = 'Logs out of your account';
 
   static examples = [`$ figtree logout`];
 
