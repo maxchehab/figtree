@@ -16,7 +16,7 @@ describe('login', () => {
           .get('/token')
           .query(true)
           .reply(200, { token: '123' })
-          .get('/whoami')
+          .get('/account')
           .reply(200, { user: { email: 'jeff@example.com' } }),
       )
       .stdout()
@@ -31,14 +31,14 @@ describe('login', () => {
       });
   });
 
-  describe('with un-successful GET /whoami response', () => {
+  describe('with un-successful GET /account response', () => {
     test
       .nock('https://figtree.sh', api =>
         api
           .get('/token')
           .query(true)
           .reply(200, { token: '123' })
-          .get('/whoami')
+          .get('/account')
           .reply(401),
       )
       .stdout()

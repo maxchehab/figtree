@@ -36,7 +36,7 @@ export default class Login extends Base {
     this.api.writeToken(token);
     this.api.setToken(token);
 
-    const { status, data } = await this.api.get('/whoami');
+    const { status, data } = await this.api.get('/account');
 
     if (status === 200) {
       const { email } = data.user;
