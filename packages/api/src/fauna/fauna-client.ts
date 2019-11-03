@@ -14,13 +14,13 @@ export class FaunaClient {
       return await this.client.query(
         q.Get(q.Match(q.Index('users_by_login_request_code'), code)),
       );
-    } finally {
+    } catch (_error) {
       return null;
     }
   }
 
   async updateUser(ref: ExprVal, data: Partial<User>) {
-    this.client.query(q.Update(ref, { data }));
+    return this.client.query(q.Update(ref, { data }));
   }
 
   async userByToken(token: string): Promise<FaunaEntity<User> | null> {
@@ -28,7 +28,7 @@ export class FaunaClient {
       return await this.client.query(
         q.Get(q.Match(q.Index('users_by_token'), token)),
       );
-    } finally {
+    } catch (_error) {
       return null;
     }
   }
@@ -38,7 +38,7 @@ export class FaunaClient {
       return await this.client.query(
         q.Get(q.Match(q.Index('users_by_id'), id)),
       );
-    } finally {
+    } catch (_error) {
       return null;
     }
   }
@@ -69,7 +69,7 @@ export class FaunaClient {
       return await this.client.query(
         q.Get(q.Match(q.Index('login_requests_by_code'), code)),
       );
-    } finally {
+    } catch (_error) {
       return null;
     }
   }

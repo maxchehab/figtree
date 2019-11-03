@@ -85,7 +85,16 @@ describe('google', () => {
 
         updateUser = jest
           .spyOn(FaunaClient.prototype, 'updateUser')
-          .mockImplementationOnce(async () => undefined);
+          .mockImplementationOnce(async () => ({
+            ref: '@ref:123',
+            data: {
+              email: 'example@gmail.com',
+              auth_status: AuthStatus.LoggedIn,
+              id: 'usr_123',
+              login_request_code: 'code_123',
+              token: 'token_123',
+            },
+          }));
       });
 
       it('updates user and returns 200', async () => {
