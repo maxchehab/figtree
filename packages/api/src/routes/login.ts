@@ -1,12 +1,10 @@
-import { Client, query as q } from 'faunadb';
 import { google } from 'googleapis';
 
-import { Lambda } from '../common/util/lambda.util';
+import { FaunaClient } from '../fauna/fauna-client';
 import { HttpException } from '../common/exceptions/http.exception';
+import { Lambda } from '../common/util/lambda.util';
 
-const faunaClient = new Client({
-  secret: process.env.FAUNA_SECRET as string,
-});
+const faunaClient = new FaunaClient();
 
 const redirectURI =
   process.env.NODE_ENV === 'production'
@@ -26,19 +24,13 @@ export default Lambda(async (req, res) => {
     throw new HttpException(400, 'Invalid code.');
   }
 
-  const expired = await faunaClient.query(
-    q.Exists(q.Match(q.Index('login_requests_by_code'), code)),
-  );
+  const request = await faunaClient.loginRequestByCode(code);
 
-  if (expired) {
-    throw new HttpException(400, 'The code has expired.');
+  if (request) {
+    throw new HttpException(400, 'Expired code.');
   }
 
-  await faunaClient.query(
-    q.Create(q.Collection('login_requests'), {
-      data: { code, createdAt: new Date() },
-    }),
-  );
+  await faunaClient.createLoginRequest(code, new Date());
 
   const location = oauth2Client.generateAuthUrl({
     access_type: 'offline',
@@ -50,5 +42,5 @@ export default Lambda(async (req, res) => {
   });
 
   res.setHeader('location', location);
-  return res.status(301).send(null);
+  return res.status(302).send(null);
 });

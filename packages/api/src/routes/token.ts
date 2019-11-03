@@ -14,7 +14,7 @@ export default Lambda(async (req, res) => {
     throw new HttpException(400, 'Invalid code.');
   }
 
-  const user = await client.userByLoginRequestCode(code);
+  const user = await client.userByLoginRequest(code);
 
   if (user) {
     const { login_request_code, auth_status } = user.data;

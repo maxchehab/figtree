@@ -55,7 +55,7 @@ describe('token', () => {
       describe('when the auth status equals Logging In', () => {
         beforeEach(() => {
           jest
-            .spyOn(FaunaClient.prototype, 'userByLoginRequestCode')
+            .spyOn(FaunaClient.prototype, 'userByLoginRequest')
             .mockImplementationOnce(async () => ({
               ref: '@ref:123',
               data: {
@@ -88,7 +88,7 @@ describe('token', () => {
       describe('when the auth status dos not equal Logging In', () => {
         beforeEach(() => {
           jest
-            .spyOn(FaunaClient.prototype, 'userByLoginRequestCode')
+            .spyOn(FaunaClient.prototype, 'userByLoginRequest')
             .mockImplementationOnce(async () => ({
               ref: '@ref:123',
               data: {
@@ -118,7 +118,7 @@ describe('token', () => {
     describe('without a matching code from fauna', () => {
       beforeEach(() => {
         jest
-          .spyOn(FaunaClient.prototype, 'userByLoginRequestCode')
+          .spyOn(FaunaClient.prototype, 'userByLoginRequest')
           .mockImplementationOnce(async () => null);
       });
 
