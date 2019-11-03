@@ -11,7 +11,7 @@ export class FaunaClient {
 
   async userByLoginRequest(code: string): Promise<FaunaEntity<User> | null> {
     try {
-      return this.client.query(
+      return await this.client.query(
         q.Get(q.Match(q.Index('users_by_login_request_code'), code)),
       );
     } finally {
@@ -25,12 +25,30 @@ export class FaunaClient {
 
   async userByToken(token: string): Promise<FaunaEntity<User> | null> {
     try {
-      return this.client.query(
+      return await this.client.query(
         q.Get(q.Match(q.Index('users_by_token'), token)),
       );
     } finally {
       return null;
     }
+  }
+
+  async userByID(id: string): Promise<FaunaEntity<User> | null> {
+    try {
+      return await this.client.query(
+        q.Get(q.Match(q.Index('users_by_id'), id)),
+      );
+    } finally {
+      return null;
+    }
+  }
+
+  async createUser(data: Partial<User>): Promise<FaunaEntity<User>> {
+    return this.client.query(
+      q.Create(q.Collection('users'), {
+        data,
+      }),
+    );
   }
 
   async createLoginRequest(
@@ -48,7 +66,7 @@ export class FaunaClient {
     code: string,
   ): Promise<FaunaEntity<LoginRequest> | null> {
     try {
-      return this.client.query(
+      return await this.client.query(
         q.Get(q.Match(q.Index('login_requests_by_code'), code)),
       );
     } finally {
