@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`google with valid code and state with existing user updates user and returns 200 1`] = `
+Object {
+  "auth_status": "LOGGING_IN",
+  "email": "example@gmail.com",
+  "id": "usr_123",
+  "login_request_code": "state",
+  "token": null,
+}
+`;
+
+exports[`google with valid code and state with non-existing user creates user and returns 200 1`] = `
+Object {
+  "auth_status": "LOGGING_IN",
+  "email": "example@gmail.com",
+  "id": "usr_123",
+  "login_request_code": "state",
+  "token": null,
+}
+`;
