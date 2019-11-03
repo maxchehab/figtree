@@ -18,17 +18,14 @@ export default class WhoAmI extends Base {
       chalk.white('figtree login'),
     );
 
-    try {
-      const { status, data } = await this.api.get('/account');
+    const { status, data } = await this.api.get('/account');
 
-      if (status === 200) {
-        const { email } = data.user;
-        this.log(email);
-        return;
-      }
-    } catch (error) {
-      this.error(notFoundMessage, { exit: 1 });
-      return this.exit();
+    if (status === 200) {
+      const { email } = data.user;
+      this.log(email);
+    } else {
+      this.error(notFoundMessage);
+      return this.exit(1);
     }
   }
 }

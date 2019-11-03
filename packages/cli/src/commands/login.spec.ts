@@ -1,4 +1,5 @@
 import { expect, test } from '@oclif/test';
+import stripAnsi from 'strip-ansi';
 
 describe('login', () => {
   beforeAll(() => {
@@ -43,13 +44,12 @@ describe('login', () => {
       )
       .stdout()
       .command(['login'])
-      .it('shows not found message with error code', ctx => {
-        const lines = ctx.stdout.split('\n');
-        expect(lines.length).to.greaterThan(2);
-        expect(lines[0]).to.match(
-          /^> Visit https:\/\/figtree.sh\/login\?code=([A-Z0-9]*)$/,
+      .it('shows unsuccessful message', ctx => {
+        const lines = ctx.stdout.split('\n').map(line => stripAnsi(line));
+        expect(lines[1]).to.equal(
+          `> An error occurred and we could not login. For more information try running this command again with the --debug flag`,
         );
-        expect(lines[1]).to.equal('> Request failed with status code 401');
+        expect(lines[2]).to.equal('> EEXIT: 1');
       });
   });
 });
