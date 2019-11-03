@@ -1,13 +1,12 @@
-import { Client, query as q } from 'faunadb';
 import { google } from 'googleapis';
 
 import { AuthStatus } from '../../common/interfaces/auth-status.enum';
+import { FaunaClient } from '../../fauna/fauna-client';
 import { HttpException } from '../../common/exceptions/http.exception';
+import { User } from '../../common/interfaces/user.interface';
 import lambda from '../../common/util/lambda.util';
 
-const faunaClient = new Client({
-  secret: process.env.FAUNA_SECRET as string,
-});
+const faunaClient = new FaunaClient();
 
 const redirectURI =
   process.env.NODE_ENV === 'production'
@@ -23,8 +22,12 @@ const oauth2Client = new google.auth.OAuth2(
 export default lambda(async (req, res) => {
   const { code, state } = req.query;
 
-  if (typeof code !== 'string' || typeof state !== 'string') {
-    throw new HttpException(400, 'Invalid code or state.');
+  if (typeof code !== 'string') {
+    throw new HttpException(400, 'Invalid code.');
+  }
+
+  if (typeof state !== 'string') {
+    throw new HttpException(400, 'Invalid state.');
   }
 
   const { tokens } = await oauth2Client.getToken(code);
@@ -36,7 +39,6 @@ export default lambda(async (req, res) => {
   });
 
   const profile = await googleClient.userinfo.get();
-
   const { id, email } = profile.data;
 
   const data = {
@@ -45,31 +47,17 @@ export default lambda(async (req, res) => {
     login_request_code: state,
     token: null,
     auth_status: AuthStatus.LoggingIn,
-  };
+  } as Partial<User>;
 
-  const exists = await faunaClient.query(
-    q.Exists(q.Match(q.Index('users_by_id'), id as string)),
-  );
+  const user = await faunaClient.userByID(id as string);
 
-  if (exists) {
-    const { ref } = await faunaClient.query(
-      q.Get(q.Match(q.Index('users_by_id'), id as string)),
-    );
-
-    await faunaClient.query(
-      q.Update(ref, {
-        data,
-      }),
-    );
+  if (user) {
+    await faunaClient.updateUser(user.ref, data);
   } else {
-    await faunaClient.query(
-      q.Create(q.Collection('users'), {
-        data,
-      }),
-    );
+    await faunaClient.createUser(data);
   }
 
   return res.status(200).json({
-    message: `You are logged in as ${email}. You may return to the shell.`,
+    message: `You are logged in as ${email}. You may close this window.`,
   });
 });
