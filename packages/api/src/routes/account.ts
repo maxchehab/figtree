@@ -1,32 +1,24 @@
-import { Client, query as q } from 'faunadb';
-
 import { AuthStatus } from '../common/interfaces/auth-status.enum';
-import { FaunaEntity } from '../fauna/interfaces/fauna-entity.interface';
+import { FaunaClient } from '../fauna/fauna-client';
 import { HttpException } from '../common/exceptions/http.exception';
 import { Lambda } from '../common/util/lambda.util';
-import { User } from '../common/interfaces/user.interface';
 import getBearerToken from '../common/util/get-bearer-token.util';
 
-const faunaClient = new Client({
-  secret: process.env.FAUNA_SECRET as string,
-});
+const faunaClient = new FaunaClient();
 
 export default Lambda(async (req, res) => {
   const token = getBearerToken(req);
+  const user = await faunaClient.userByToken(token);
 
-  const exists = await faunaClient.query(
-    q.Exists(q.Match(q.Index('users_by_token'), token)),
-  );
-
-  if (exists) {
-    const { data } = (await faunaClient.query(
-      q.Get(q.Match(q.Index('users_by_token'), token)),
-    )) as FaunaEntity<User>;
-
-    if (data.auth_status === AuthStatus.LoggedIn) {
-      return res.status(200).json({ user: data });
-    }
+  if (!user) {
+    throw new HttpException(400, 'Invalid token.');
   }
 
-  throw new HttpException(400, 'Invalid token.');
+  const { data } = user;
+
+  if (data.auth_status !== AuthStatus.LoggedIn) {
+    throw new HttpException(400, 'Invalid token.');
+  }
+
+  return res.status(200).json({ user: data });
 });
