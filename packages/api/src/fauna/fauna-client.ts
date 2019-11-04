@@ -2,6 +2,7 @@ import { Client, query as q, ExprVal } from 'faunadb';
 
 import { FaunaEntity } from './interfaces/fauna-entity.interface';
 import { LoginRequest } from '../common/interfaces/login-request.interface';
+import { Project } from '../common/interfaces/project.interface';
 import { User } from '../common/interfaces/user.interface';
 
 export class FaunaClient {
@@ -41,6 +42,17 @@ export class FaunaClient {
     } catch (_error) {
       return null;
     }
+  }
+
+  async projectsByUser(
+    user: FaunaEntity<User>,
+  ): Promise<Array<FaunaEntity<Project>>> {
+    return this.client.query(
+      q.Map(
+        q.Paginate(q.Match(q.Index('projects_by_user_id'), user.data.id)),
+        q.Lambda('X', q.Get(q.Var('X'))),
+      ),
+    );
   }
 
   async createUser(data: Partial<User>): Promise<FaunaEntity<User>> {

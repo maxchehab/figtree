@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`projects with two projects associated with the user returns two projects 1`] = `
+Array [
+  Object {
+    "id": "code_123",
+    "name": "token_123",
+    "user_id": "usr_123",
+  },
+  Object {
+    "id": "code_123",
+    "name": "token_123",
+    "user_id": "usr_123",
+  },
+]
+`;
