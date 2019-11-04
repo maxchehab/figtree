@@ -10,7 +10,7 @@ export default lambda(async (req, res) => {
   const token = getBearerToken(req);
   const user = await faunaClient.userByToken(token);
 
-  if (!user) {
+  if (!user || user.data.auth_status !== AuthStatus.LoggedIn) {
     throw new HttpException(400, 'Invalid bearer token.');
   }
 
