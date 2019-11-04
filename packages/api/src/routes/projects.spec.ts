@@ -6,14 +6,14 @@ import { AuthStatus } from '../common/interfaces/auth-status.enum';
 import { FaunaClient } from '../fauna/fauna-client';
 import closeServer from '../test/close-server';
 import createTestLambda from '../test/create-test-lambda';
-import logout from './logout';
+import projects from './projects';
 
-describe('logout', () => {
+describe('projects', () => {
   let server: http.Server;
   let url: string;
 
   beforeAll(async () => {
-    server = createTestLambda(logout);
+    server = createTestLambda(projects);
     url = await listen(server);
   });
 
@@ -41,12 +41,10 @@ describe('logout', () => {
     });
   });
 
-  describe('with user associated to the token', () => {
-    let updateUser: any;
-
+  describe('with two projects associated with the user', () => {
     beforeEach(() => {
-      updateUser = jest
-        .spyOn(FaunaClient.prototype, 'updateUser')
+      jest
+        .spyOn(FaunaClient.prototype, 'userByToken')
         .mockImplementationOnce(async () => ({
           ref: '@ref:123',
           data: {
@@ -59,32 +57,67 @@ describe('logout', () => {
         }));
 
       jest
-        .spyOn(FaunaClient.prototype, 'userByToken')
-        .mockImplementationOnce(async () => ({
-          ref: '@ref:123',
-          data: {
-            email: 'example@gmail.com',
-            auth_status: AuthStatus.LoggedIn,
-            id: 'usr_123',
-            login_request_code: 'code_123',
-            token: 'token_123',
+        .spyOn(FaunaClient.prototype, 'projectsByUser')
+        .mockImplementationOnce(async () => [
+          {
+            ref: '@ref:123',
+            data: {
+              id: 'code_123',
+              name: 'token_123',
+              user_id: 'usr_123',
+            },
           },
-        }));
+          {
+            ref: '@ref:123',
+            data: {
+              id: 'code_123',
+              name: 'token_123',
+              user_id: 'usr_123',
+            },
+          },
+        ]);
     });
 
-    it('returns 200', async () => {
-      const { status } = await axios.get(url, {
+    it('returns two projects', async () => {
+      const { status, data } = await axios.get(url, {
         validateStatus: () => true,
         headers: { authorization: 'Bearer token_123' },
       });
 
       expect(status).toEqual(200);
+      expect(data.projects.length).toEqual(2);
+      expect(data.projects).toMatchSnapshot();
+    });
+  });
 
-      expect(updateUser).toBeCalledTimes(1);
-      expect(updateUser.mock.calls[0][1].auth_status).toEqual(
-        AuthStatus.LoggedOut,
-      );
-      expect(updateUser.mock.calls[0][1].token).toBeNull();
+  describe('with two projects associated with the user', () => {
+    beforeEach(() => {
+      jest
+        .spyOn(FaunaClient.prototype, 'userByToken')
+        .mockImplementationOnce(async () => ({
+          ref: '@ref:123',
+          data: {
+            email: 'example@gmail.com',
+            auth_status: AuthStatus.LoggedOut,
+            id: 'usr_123',
+            login_request_code: 'code_123',
+            token: 'token_123',
+          },
+        }));
+
+      jest
+        .spyOn(FaunaClient.prototype, 'projectsByUser')
+        .mockImplementationOnce(async () => []);
+    });
+
+    it('returns empty projects array', async () => {
+      const { status, data } = await axios.get(url, {
+        validateStatus: () => true,
+        headers: { authorization: 'Bearer token_123' },
+      });
+
+      expect(status).toEqual(200);
+      expect(data).toEqual({ projects: [] });
     });
   });
 });
