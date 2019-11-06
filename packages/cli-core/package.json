@@ -1,39 +1,20 @@
 {
-  "name": "@figtree/cli",
-  "description": "env files shouldn't exist.",
+  "name": "@figtree/cli-core",
+  "description": "cli framework for @figtree/cli",
   "version": "0.0.0",
   "author": "maxchehab @maxchehab",
   "private": false,
-  "bin": {
-    "figtree": "./bin/run"
-  },
   "bugs": "https://github.com/maxchehab/figtree/issues",
   "engines": {
     "node": ">=8.0.0"
   },
-  "files": [
-    "/bin",
-    "/dist",
-    "/npm-shrinkwrap.json",
-    "/oclif.manifest.json"
-  ],
   "homepage": "https://github.com/maxchehab/figtree",
   "keywords": [
     "figtree",
-    "cli"
+    "cli-core"
   ],
   "license": "MIT",
   "main": "dist/index.js",
-  "oclif": {
-    "commands": "./dist/commands",
-    "hooks": {
-      "command_not_found": "./dist/hooks/command-not-found.hook"
-    },
-    "bin": "figtree",
-    "plugins": [
-      "@oclif/plugin-help"
-    ]
-  },
   "jest": {
     "moduleFileExtensions": [
       "js",
@@ -50,18 +31,12 @@
   },
   "repository": "maxchehab/figtree",
   "scripts": {
-    "postpack": "rm -f oclif.manifest.json",
-    "prepack": "rm -rf dist && tsc -b && oclif-dev manifest",
     "test": "yarn jest",
     "lint": "tslint -p tsconfig.json -c ../../tslint.json",
     "build": "tsc -b tsconfig.json",
     "bump-version": "auto-upgrade-npm-version"
   },
-  "types": "dist/index.d.ts",
   "dependencies": {
-    "@oclif/command": "1.5.19",
-    "@oclif/config": "1.13.3",
-    "@oclif/plugin-help": "2.2.1",
     "@types/node": "12.11.7",
     "axios": "0.19.0",
     "chalk": "2.4.2",
@@ -71,8 +46,7 @@
     "ts-node": "8.4.1",
     "tslib": "1.10.0",
     "typescript": "3.6.4",
-    "ulid": "2.3.0",
-    "@figtree/cli-core": "0.0.0"
+    "ulid": "2.3.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "1.22.2",
